@@ -1,1 +1,2 @@
-# codewars-python# codewars-python
+# codewars
+My solutions to Katas on CodeWars.
