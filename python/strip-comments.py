@@ -5,43 +5,34 @@ def solution(string, markers):
 
     lines = string.split("\n")
 
-    idx = 0
-    while idx < len(lines):
-        lines[idx] = lines[idx].strip()
-        idx += 1
-
-    print(lines)
-
-    for line in lines:
-        # check which marker is present
-        marker = ""
-        for i in markers:
-            if i in line:
-                marker = i
+    for i in range(len(lines)):
+        marker_idx = -1
+        for letter_idx in range(len(lines[i])):
+            if lines[i][letter_idx] in markers:
+                marker_idx = letter_idx
                 break
             else:
-                marker = ""
+                marker_idx = -1
         
+        slice_point = slice(marker_idx)
 
-        if marker != "":
-            output.append(line.split(marker)[0] + "\n")
+        if marker_idx != -1:
+            output.append(lines[i][slice_point] + "\n")
         else:
-            output.append(line + "\n")
-
+            output.append(lines[i] + "\n")
 
     for i in range(len(output)):
         if " \n" in output[i]:
             output[i] = output[i].replace(" \n", "\n")
     
-    remove_markers(output, markers)
+    remove_extra_markers(output, markers)
     
     # remove \n from last item
     output[-1] = output[-1].strip()
 
-
     return ''.join(output)
 
-def remove_markers(text, markers):
+def remove_extra_markers(text, markers):
     for i in markers:
         for j in range(len(text)):
             if i in text[j]:
@@ -52,6 +43,10 @@ def remove_markers(text, markers):
 
 # result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"])
 # result = solution("apples, pears \ngrapes\nbananas \n", ["#", "!"])
-result = solution("a #\nc\nd $e f g", ["#", "$"])
+# result = solution("a #\nc\nd $e f g", ["#", "$"])
 
-print(result)
+# result = solution("# avocados bananas bananas\nlemons strawberries apples apples\nstrawberries\noranges ! ? cherries bananas '\nbananas ' oranges bananas watermelons", ["'", "?"])
+
+# print(result)
+
+# print("Should equal to:\n" + r"# avocados bananas bananas\nlemons strawberries apples apples\nstrawberries\noranges !\nbananas")
